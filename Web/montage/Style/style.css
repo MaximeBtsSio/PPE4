@@ -1,0 +1,12 @@
+#Title{
+text-align: center;
+}
+
+#cadre{
+    height:100%;
+    border:4px solid #222222;
+    text-align: center;
+    width: 28%;
+    margin:auto;
+    padding: 0px 0px 10px 0px;
+}
