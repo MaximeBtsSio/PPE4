@@ -20,6 +20,8 @@ and open the template in the editor.
                     ?>
 
            <div id="cadre">
+             <form id='frm' name='frm' method='post' action='Accueil.php'>
+
              <!-- Permet de sélectionner la vidéo auquel on veut afficher les détail des rushes -->
              <h3> Détail Vidéo </h3>
                <select name="nomvideo" required="">
@@ -34,22 +36,36 @@ and open the template in the editor.
                  $resultat->closeCursor();
                  ?>
                </select>
-                 <input type="submit" value="Valider"/>
+                 <input type="submit" name ='valider' value="Valider"/>
+               </form>
+               <br>
 
+               <!-- Affichage des Rushes lorsque l'on clique sur le bouton Valider -->
                  <?php
+                 $action = '';
+                    if (isset($_POST['valider']))
+                    {
+                      $req = "SELECT * FROM Rushes;";
+                      $resultat =$connexion->query($req);
+                       while ($ligne= $resultat->fetch()) {
+                         ?>
 
-                 if (isset($_POST['nom'])) {
-
-
-                    $res = mysql_query("SELECT * FROM Rushes WHERE nom='".mysql_real_escape_string($_POST['nom'])."'");
-                    echo '<table><tr><th>nom</th><th>timIn</th><th>timOut</th></tr>';
-                    while ($ligne = mysql_fetch_assoc($resultat->fetch())) {
-                       echo '<tr><td>',$row['nom'],'</td><td>', $row['timeIn'], ', ', $row['timeOut'], '</td></tr>';
+                           <tr>
+                               <?php  echo 'Début du Rushe: '.$ligne['tempsDebut'];
+                                 $ligne['tempsDebut'];
+                                 ?>
+                           </tr>
+                           <br>
+                           <tr>
+                               <?php  echo ' Fin du Rushe: '.$ligne['tempsFin'];
+                                 $ligne['tempsFin'];
+                                 ?>
+                           </tr>
+                         <?php
+                       }
                     }
-                    echo '</table>';
-                 }
+                    $resultat->closeCursor();
                  ?>
-
            </div>
 
 
