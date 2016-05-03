@@ -11,81 +11,82 @@ and open the template in the editor.
         <title>Accueil</title>
     </head>
           <body>
-            <div id="Title">
-              <h1>Bienvenue sur le chercheur de Rushes </h1>
-            </div>
+              <div id="Title">
+                <h1>Bienvenue sur le chercheur de Rushes </h1>
+              </div>
 
-            <?php
-              include 'Include/ConnexionmBDD.php';
-            ?>
-
-           <div id="cadre">
-             <form id='frm' name='frm' method='post' action='Accueil.php'>
-
-               <!-- Permet de sélectionner la vidéo auquel on veut afficher les détail des rushes -->
-               <h3> Détail Vidéo </h3>
-                 <select name="nomvideo" required="">
-                   <option value="">Sélectionnez une vidéo</option>
-                   <?php
-                   $req = "SELECT * FROM Video;";
-                   $resultat =$connexion->query($req);
-                   while ($ligne= $resultat->fetch()) { ?>
-                     <option value="<?php echo $ligne['id_video']; ?>"><?php echo $ligne['nom_video']; ?></option>;
-                   <?php }
-
-                   $resultat->closeCursor();
-                   ?>
-                 </select>
-                   <input type="submit" name ='valider' value="Valider"/>
-               </form>
-               <br>
-
-               <!-- Affichage des noms de Vidéo et de  Rushes lorsque l'on clique sur le bouton Valider -->
               <?php
-                 $action = '';
-                    if (isset($_POST['valider']))
-                    {
-                      $req = "SELECT * FROM Rushes INNER JOIN Video ON Video.id_video = Rushes.id_video WHERE Rushes.id_video = ".$_POST['nomvideo'].";";
-                      $resultat =$connexion->query($req);
-                      $ligne= $resultat->fetch();
-                      ?>
+                include 'Include/ConnexionmBDD.php';
+              ?>
 
-                      <!-- Affichage le nom de la vidéo séléctionner -->
-                      <h4>
-                        <td>
-                        <?php  echo $ligne['nom_video'];
-                        ?>
-                      </td>
-                     </h4>
-                     <?php
-                       do {
-                         ?>
-                         <br><br>
+               <div id="cadre">
+                 <form id='frm' name='frm' method='post' action='Accueil.php'>
 
-                         <!-- Affichage une description du Rushes de la vidéo séléctionner auparavant -->
-                           <td>
-                            <?php  echo $ligne['description_rushes'];
+                   <!-- Permet de sélectionner la vidéo auquel on veut afficher les détail des rushes -->
+                   <h3> Détail Vidéo </h3>
+                     <select name="nomvideo" required="">
+                       <option value="">Sélectionnez une vidéo</option>
+                       <?php
+                       $req = "SELECT * FROM Video;";
+                       $resultat =$connexion->query($req);
+                       while ($ligne= $resultat->fetch()) { ?>
+                         <option value="<?php echo $ligne['id_video']; ?>"><?php echo $ligne['nom_video']; ?></option>;
+                       <?php }
+
+                       $resultat->closeCursor();
+                       ?>
+                     </select>
+                       <input type="submit" name ='valider' value="Valider"/>
+                   </form>
+                   <br>
+
+                   <!-- Affichage des noms de Vidéo et de  Rushes lorsque l'on clique sur le bouton Valider -->
+                  <?php
+                     $action = '';
+                        if (isset($_POST['valider']))
+                        {
+                          $req = "SELECT * FROM Rushes INNER JOIN Video ON Video.id_video = Rushes.id_video WHERE Rushes.id_video = ".$_POST['nomvideo'].";";
+                          $resultat =$connexion->query($req);
+                          $ligne= $resultat->fetch();
+                          ?>
+
+                          <!-- Affichage le nom de la vidéo séléctionner -->
+                          <h4>
+                            <td>
+                            <?php  echo $ligne['nom_video'];
                             ?>
-                           </td>
-                            <br>
+                          </td>
+                         </h4>
 
-                            <!-- Affichage des temps de début et de fin de chaque Rushes de la vidéo séléctionner auparavant -->
-                           <td>
-                               <?php  echo 'Début du Rushe: '.$ligne['temps_debut'];
-                                 ?>
-                           </td>
-                            <br>
-                           <td>
-                               <?php  echo 'Fin du Rushe: '.$ligne['temps_fin'];
-                                 ?>
-                           </td>
                          <?php
+                           do {
+                             ?>
+                             <br><br>
 
-                       } while ($ligne= $resultat->fetch());
-                    }
-                    $resultat->closeCursor();
-                ?>
-           </div>
+                             <!-- Affichage une description du Rushes de la vidéo séléctionner précédemment -->
+                               <td>
+                                <?php  echo $ligne['description_rushes'];
+                                ?>
+                               </td>
+                                <br>
+
+                                <!-- Affichage des temps de début et de fin de chaque Rushes de la vidéo séléctionner auparavant -->
+                               <td>
+                                   <?php  echo 'Début du Rushe: '.$ligne['temps_debut'];
+                                     ?>
+                               </td>
+                                <br>
+                               <td>
+                                   <?php  echo 'Fin du Rushe: '.$ligne['temps_fin'];
+                                     ?>
+                               </td>
+                             <?php
+
+                           } while ($ligne= $resultat->fetch());
+                        }
+                        $resultat->closeCursor();
+                    ?>
+               </div>
 
 
           </body>

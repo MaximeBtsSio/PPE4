@@ -9,7 +9,16 @@ text-align: center;
     width: 28%;
     margin:auto;
     padding: 0px 0px 10px 0px;
+    background-color: white;
+    opacity: 1.0;
 }
 input[type="submit"] {
     margin: 0px 0px 0px 5px;
+}
+
+body
+{
+    background-image: url("../images/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
