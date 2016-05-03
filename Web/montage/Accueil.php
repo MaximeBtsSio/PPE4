@@ -29,9 +29,9 @@ and open the template in the editor.
                    <?php
                    $req = "SELECT * FROM Video;";
                    $resultat =$connexion->query($req);
-                   while ($ligne= $resultat->fetch()) {
-                     echo "<option value=''>".$ligne[nom]."</option>";
-                   }
+                   while ($ligne= $resultat->fetch()) { ?>
+                     <option value="<?php echo $ligne['id_video']; ?>"><?php echo $ligne['nom_video']; ?></option>;
+                   <?php }
 
                    $resultat->closeCursor();
                    ?>
@@ -40,41 +40,48 @@ and open the template in the editor.
                </form>
                <br>
 
-               <!-- Affichage des Rushes lorsque l'on clique sur le bouton Valider -->
+               <!-- Affichage des noms de Vidéo et de  Rushes lorsque l'on clique sur le bouton Valider -->
               <?php
                  $action = '';
                     if (isset($_POST['valider']))
                     {
-                      $req = "SELECT * FROM Rushes;";
+                      $req = "SELECT * FROM Rushes INNER JOIN Video ON Video.id_video = Rushes.id_video WHERE Rushes.id_video = ".$_POST['nomvideo'].";";
                       $resultat =$connexion->query($req);
-                       while ($ligne= $resultat->fetch()) {
+                      $ligne= $resultat->fetch();
+                      ?>
+
+                      <!-- Affichage le nom de la vidéo séléctionner -->
+                      <h4>
+                        <td>
+                        <?php  echo $ligne['nom_video'];
+                        ?>
+                      </td>
+                     </h4>
+                     <?php
+                       do {
                          ?>
-                         <h4>
-                           <th>
-                           <?php  echo $ligne['nom_video'];
-                           $ligne['nom_video'];
-                           ?>
-                          </th>
-                        </h4>
+                         <br><br>
+
+                         <!-- Affichage une description du Rushes de la vidéo séléctionner auparavant -->
                            <td>
-                            <?php  echo $ligne['nom_rushes'];
-                            $ligne['nom_rushes'];
+                            <?php  echo $ligne['description_rushes'];
                             ?>
                            </td>
                             <br>
-                           <tr>
-                               <?php  echo 'Début du Rushe: '.$ligne['tempsDebut'];
-                                 $ligne['tempsDebut'];
+
+                            <!-- Affichage des temps de début et de fin de chaque Rushes de la vidéo séléctionner auparavant -->
+                           <td>
+                               <?php  echo 'Début du Rushe: '.$ligne['temps_debut'];
                                  ?>
-                           </tr>
+                           </td>
                             <br>
-                           <tr>
-                               <?php  echo ' Fin du Rushe: '.$ligne['tempsFin'];
-                                 $ligne['tempsFin'];
+                           <td>
+                               <?php  echo 'Fin du Rushe: '.$ligne['temps_fin'];
                                  ?>
-                           </tr>
+                           </td>
                          <?php
-                       }
+
+                       } while ($ligne= $resultat->fetch());
                     }
                     $resultat->closeCursor();
                 ?>
