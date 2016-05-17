@@ -23,7 +23,7 @@ and open the template in the editor.
                  <form id='frm' name='frm' method='post' action='Accueil.php'>
 
                    <!-- Permet de sélectionner la vidéo auquel on veut afficher les détail des rushes -->
-                   <h3> Détail Vidéo </h3>
+                   <h2> Détail Vidéo </h2>
                      <select name="nomvideo" required="">
                        <option value="">Sélectionnez une vidéo</option>
                        <?php
@@ -40,7 +40,6 @@ and open the template in the editor.
                    </form>
                    <br>
 
-                   <!-- Affichage des noms de Vidéo et de  Rushes lorsque l'on clique sur le bouton Valider -->
                   <?php
                      $action = '';
                         if (isset($_POST['valider']))
@@ -75,12 +74,29 @@ and open the template in the editor.
                                    <?php  echo 'Début du Rushe: '.$ligne['temps_debut'];
                                      ?>
                                </td>
+
                                 <br>
                                <td>
                                    <?php  echo 'Fin du Rushe: '.$ligne['temps_fin'];
                                      ?>
                                </td>
+
+                               <?php
+                                    $req = "SELECT nom_episode FROM Episode INNER JOIN Montage ON Montage.num_episode = Episode.num_episode INNER JOIN Composition ON Composition.num_montage = Montage.num_montage WHERE Composition.id_video = ".$ligne['id_video']." AND Composition.num_rushes = ".$ligne['num_rushes'].";";
+
+                                    $res =$connexion->query($req);
+                                    $rep= $res->fetch();
+                                  if ($rep['nom_episode'])
+                                  {
+
+                                ?>
+                                </br>
+                               <td>
+                                   <?php  echo 'Le Rushe est utilisé dans l\'episode: '.$rep['nom_episode'];
+                                     ?>
+                               </td>
                              <?php
+                                  }
 
                            } while ($ligne= $resultat->fetch());
                         }
