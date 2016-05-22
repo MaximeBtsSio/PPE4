@@ -37,8 +37,7 @@ and open the template in the editor.
                        ?>
                      </select>
                        <input type="submit" name ='valider' value="Valider"/>
-                   </form>
-                   <br>
+                   </form><br>
 
                   <?php
                      $action = '';
@@ -54,7 +53,7 @@ and open the template in the editor.
                             <td>
                             <?php  echo $ligne['nom_video'];
                             ?>
-                          </td>
+                            </td>
                          </h4>
 
                          <?php
@@ -63,19 +62,18 @@ and open the template in the editor.
                              <br><br>
 
                              <!-- Affichage une description du Rushes de la vidéo séléctionner précédemment -->
-                               <td>
+                             <div id="description">
+                              <td>
                                 <?php  echo $ligne['description_rushes'];
                                 ?>
-                               </td>
-                                <br>
+                              </td></div>
 
                                 <!-- Affichage des temps de début et de fin de chaque Rushes de la vidéo séléctionner auparavant -->
                                <td>
                                    <?php  echo 'Début du Rushe: '.$ligne['temps_debut'];
                                      ?>
-                               </td>
+                               </td><br>
 
-                                <br>
                                <td>
                                    <?php  echo 'Fin du Rushe: '.$ligne['temps_fin'];
                                      ?>
@@ -91,6 +89,8 @@ and open the template in the editor.
 
                                 ?>
                                 </br>
+
+                                <!--Affiche le nom de l'épisode dans lequel le rushes est utilisé -->
                                <td>
                                    <?php  echo 'Le Rushe est utilisé dans l\'episode: '.$rep['nom_episode'];
                                      ?>

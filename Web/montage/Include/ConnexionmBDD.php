@@ -1,3 +1,4 @@
+<!-- Connexion a la Base de Données -->
 <?php
 session_start();
 $PARAM_hote = '172.16.99.3';
